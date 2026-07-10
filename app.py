@@ -9,7 +9,8 @@ import pandas as pd
 # Auto-install Playwright browser binaries on Streamlit Cloud
 if os.environ.get("STREAMLIT_SERVER_PORT") is not None:
     try:
-        subprocess.run(["playwright", "install", "chromium"], check=True)
+        import sys
+        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
     except Exception as e:
         st.warning(f"Playwright browser auto-installation failed: {e}")
 
