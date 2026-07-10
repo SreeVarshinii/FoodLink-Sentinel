@@ -6,13 +6,24 @@ import subprocess
 from datetime import datetime
 import pandas as pd
 
-# Auto-install Playwright browser binaries on Streamlit Cloud
-if os.environ.get("STREAMLIT_SERVER_PORT") is not None:
-    try:
-        import sys
-        subprocess.run([sys.executable, "-m", "playwright", "install", "chromium"], check=True)
-    except Exception as e:
-        st.warning(f"Playwright browser auto-installation failed: {e}")
+# Auto-install Playwright browser binaries unconditionally on startup
+try:
+    import sys
+    import subprocess
+    # Run install chromium and print outputs for debugging
+    res = subprocess.run(
+        [sys.executable, "-m", "playwright", "install", "chromium"],
+        capture_output=True,
+        text=True,
+        check=True
+    )
+except Exception as e:
+    # Print the error details to the server logs
+    print(f"PLAYWRIGHT INSTALLATION ERROR: {e}")
+    if hasattr(e, 'stderr') and e.stderr:
+        print(f"PLAYWRIGHT INSTALLATION STDERR: {e.stderr}")
+    if hasattr(e, 'stdout') and e.stdout:
+        print(f"PLAYWRIGHT INSTALLATION STDOUT: {e.stdout}")
 
 from db import get_all_scraped_data, get_benchmark_results, get_leakage_events, init_db
 init_db() # Ensure tables exist on startup (critical for Streamlit Cloud clean deploy)
