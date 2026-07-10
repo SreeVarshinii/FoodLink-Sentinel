@@ -13,7 +13,8 @@ if not os.path.exists("/home/appuser/.cache/ms-playwright") and os.environ.get("
     except Exception as e:
         st.warning(f"Playwright installation failed: {e}")
 
-from db import get_all_scraped_data, get_benchmark_results, get_leakage_events
+from db import get_all_scraped_data, get_benchmark_results, get_leakage_events, init_db
+init_db() # Ensure tables exist on startup (critical for Streamlit Cloud clean deploy)
 from scraper import scrape_and_save_all, SOURCE_REGISTRY
 from benchmark import run_experiment_suite
 
