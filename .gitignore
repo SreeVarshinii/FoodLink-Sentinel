@@ -1,0 +1,28 @@
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# Local Environment Secrets
+.env
+.env.local
+
+# Databases
+foodlink.db
+foodlink.db-journal
+
+# Python Caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Streamlit Caches
+.streamlit/
+
+# Ignores Verification Test Scripts (as requested)
+test_*.py
+test_phase*.py
+
+# Ignores Markdown Documentation Files (as requested)
+*.md
